@@ -158,17 +158,16 @@ export default function DemoPage() {
       speakCurrentStep(TOUR_STEPS[index].text);
     }
   };
-
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
       {/* Header */}
-      <header className="border-b border-slate-900 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40 px-6 py-4 flex items-center justify-between shadow-lg">
+      <header className="border-b border-slate-200 bg-white sticky top-0 z-40 px-6 py-4 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-3">
-          <Link href="/dashboard" className="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+          <Link href="/dashboard" className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
             AI Rural Finance
           </Link>
-          <span className="text-slate-700">/</span>
-          <span className="text-sm text-slate-300 font-semibold">🎬 Platform Tour Guide</span>
+          <span className="text-slate-300">/</span>
+          <span className="text-sm text-slate-800 font-semibold">🎬 Platform Tour Guide</span>
         </div>
         <Link
           href="/dashboard"
@@ -181,47 +180,47 @@ export default function DemoPage() {
       {/* Main Container */}
       <main className="flex-1 max-w-5xl w-full mx-auto p-6 flex flex-col items-center justify-center space-y-6">
         <div className="text-center space-y-2 max-w-xl">
-          <h2 className="text-2xl font-black tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
+          <h2 className="text-2xl font-black tracking-tight text-slate-900">
             Interactive Video Tour Player
           </h2>
-          <p className="text-xs text-slate-400 leading-relaxed">
-            Experience our 10 advanced hackathon upgrades natively. Play the video below to hear the spoken English Male voice explanation synced with dynamic closed captions!
+          <p className="text-xs text-slate-600 leading-relaxed">
+            Experience our 10 advanced hackathon upgrades natively. Play the video below to hear the spoken English Male voice explanation synced with high-contrast closed captions!
           </p>
         </div>
 
         {/* Video Player Display Container */}
-        <div className="relative w-full max-w-3xl aspect-[1.66] bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between">
+        <div className="relative w-full max-w-3xl aspect-[1.66] bg-slate-100 border border-slate-200 rounded-3xl overflow-hidden shadow-lg flex flex-col justify-between">
           
           {/* Main webp animation rendering */}
-          <div className="flex-1 w-full relative flex items-center justify-center bg-slate-950">
+          <div className="flex-1 w-full relative flex items-center justify-center bg-white">
             <img
               src="/rural_finance_demo.webp"
               alt="Walkthrough Video Frame"
               className="w-full h-full object-contain"
             />
             {!isPlaying && elapsedTime === 0 && (
-              <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-sm flex flex-col items-center justify-center gap-3 transition">
+              <div className="absolute inset-0 bg-white/70 backdrop-blur-sm flex flex-col items-center justify-center gap-3 transition">
                 <button
                   onClick={handlePlayPause}
                   className="h-16 w-16 bg-blue-600 hover:bg-blue-500 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-2xl transition hover:scale-110 active:scale-95"
                 >
                   ▶
                 </button>
-                <span className="text-xs font-bold text-slate-300">Click to Play Interactive Guided Tour</span>
+                <span className="text-xs font-bold text-slate-800">Click to Play Interactive Guided Tour</span>
               </div>
             )}
           </div>
 
           {/* Synced Burned-in-Style Closed Captions Overlay */}
-          <div className="p-4 bg-slate-950/95 border-t border-slate-900 text-center min-h-[70px] flex items-center justify-center">
-            <p className="text-xs font-semibold text-blue-300 leading-relaxed max-w-2xl px-4 animate-fade-in font-mono">
+          <div className="p-4 bg-slate-50 border-t border-slate-200 text-center min-h-[80px] flex items-center justify-center">
+            <p className="text-xs font-bold text-slate-900 leading-relaxed max-w-2xl px-4 animate-fade-in font-mono">
               💬 [Subtitle]: {TOUR_STEPS[currentStepIndex].text}
             </p>
           </div>
         </div>
 
         {/* Media Controls Bar */}
-        <div className="w-full max-w-3xl bg-slate-900/50 border border-slate-800/80 rounded-2xl p-4 flex flex-col gap-4 shadow-lg backdrop-blur-sm">
+        <div className="w-full max-w-3xl bg-white border border-slate-200 rounded-2xl p-4 flex flex-col gap-4 shadow-md">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <button
@@ -232,7 +231,7 @@ export default function DemoPage() {
               </button>
               <button
                 onClick={handleReset}
-                className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition"
+                className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition"
               >
                 ✕ Reset
               </button>
@@ -240,31 +239,31 @@ export default function DemoPage() {
 
             {/* Timeline slider indicator */}
             <div className="flex-1 flex items-center gap-2">
-              <span className="text-[10px] text-slate-400 font-mono">
+              <span className="text-[10px] text-slate-600 font-mono">
                 {Math.floor(elapsedTime / 60)}:{(elapsedTime % 60).toString().padStart(2, '0')}
               </span>
-              <div className="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden relative">
+              <div className="flex-1 h-1.5 bg-slate-200 rounded-full overflow-hidden relative">
                 <div
-                  className="h-full bg-blue-500 transition-all duration-1000"
+                  className="h-full bg-blue-600 transition-all duration-1000"
                   style={{ width: `${(elapsedTime / totalDuration) * 100}%` }}
                 ></div>
               </div>
-              <span className="text-[10px] text-slate-400 font-mono">
+              <span className="text-[10px] text-slate-600 font-mono">
                 {Math.floor(totalDuration / 60)}:{(totalDuration % 60).toString().padStart(2, '0')}
               </span>
             </div>
           </div>
 
           {/* Interactive Steps Jump Chips */}
-          <div className="border-t border-slate-800/60 pt-3 flex gap-2 overflow-x-auto whitespace-nowrap scrollbar-none">
+          <div className="border-t border-slate-100 pt-3 flex gap-2 overflow-x-auto whitespace-nowrap scrollbar-none">
             {TOUR_STEPS.map((step, idx) => (
               <button
                 key={idx}
                 onClick={() => handleJumpToStep(idx)}
                 className={`px-3 py-1.5 rounded-lg border text-[10px] font-bold transition ${
                   currentStepIndex === idx
-                    ? 'border-blue-500 bg-blue-500/10 text-blue-400'
-                    : 'border-slate-800 bg-slate-900 text-slate-400 hover:text-slate-200'
+                    ? 'border-blue-600 bg-blue-50 text-blue-700'
+                    : 'border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`}
               >
                 Step {idx + 1}: {step.title}
