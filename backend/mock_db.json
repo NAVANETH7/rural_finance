@@ -1,0 +1,49 @@
+{
+  "User": [
+    {
+      "_id": "60c72b2f9b1d8b22a84d2d4f",
+      "email": "test_new_user@test.com",
+      "password": "$2a$10$4KjjEkBfHC8QQItSTB0W5O6vb.OwFePQfTipIW1PMY6HTrnEl6ZVa",
+      "role": "Business Owner",
+      "isVerified": true,
+      "profile": {
+        "firstName": "Rajesh",
+        "lastName": "Kumar",
+        "phone": "9876543210"
+      },
+      "createdAt": "2026-07-19T15:30:02.349Z",
+      "updatedAt": "2026-07-19T15:30:02.350Z"
+    },
+    {
+      "_id": "60c72b2f9b1d8b22a84d2d50",
+      "email": "officer@example.com",
+      "password": "$2a$10$4KjjEkBfHC8QQItSTB0W5O6vb.OwFePQfTipIW1PMY6HTrnEl6ZVa",
+      "role": "Bank Officer",
+      "isVerified": true,
+      "profile": {
+        "firstName": "Amit",
+        "lastName": "Sharma",
+        "phone": "9876543211"
+      },
+      "createdAt": "2026-07-19T15:30:02.350Z",
+      "updatedAt": "2026-07-19T15:30:02.350Z"
+    },
+    {
+      "_id": "60c72b2f9b1d8b22a84d2d51",
+      "email": "admin@example.com",
+      "password": "$2a$10$4KjjEkBfHC8QQItSTB0W5O6vb.OwFePQfTipIW1PMY6HTrnEl6ZVa",
+      "role": "Admin",
+      "isVerified": true,
+      "profile": {
+        "firstName": "Sanjay",
+        "lastName": "Verma",
+        "phone": "9876543212"
+      },
+      "createdAt": "2026-07-19T15:30:02.350Z",
+      "updatedAt": "2026-07-19T15:30:02.350Z"
+    }
+  ],
+  "Business": [],
+  "Transaction": [],
+  "RiskScore": []
+}

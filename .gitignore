@@ -1,0 +1,7 @@
+node_modules/
+.env
+ai-engine/ai/dataset/synthetic_data.csv
+*.mp3
+*.webp
+*.tmp
+temp_frames/

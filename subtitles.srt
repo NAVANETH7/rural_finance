@@ -1,0 +1,23 @@
+1
+00:00:00,000 --> 00:00:05,000
+Welcome to A.I. Rural Finance, an intelligent credit decisioning platform for rural entrepreneurs.
+
+2
+00:00:05,000 --> 00:00:13,000
+First, we test the built-in accessibility speaker, reading matching scheme benefits aloud in local languages.
+
+3
+00:00:13,000 --> 00:00:21,000
+Next, we take the interactive Credit Booster Quiz. Answering successfully boosts our credit score by plus five percent.
+
+4
+00:00:21,000 --> 00:00:32,000
+By opening the UPI QR Code modal and triggering a simulated client payment, the backend updates our cash flow ledger dynamically.
+
+5
+00:00:32,000 --> 00:00:43,000
+Navigating to the Loans page, we see our micro-credit history and claim the emergency interest-free weather relief overdraft.
+
+6
+00:00:43,000 --> 00:00:50,000
+Finally, we slide the Credit Score Simulator to see how growing revenue and lower expenses immediately increase borrowing limits.

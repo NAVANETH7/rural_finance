@@ -1,0 +1,22 @@
+import { createModelProxy } from './dbProxy';
+import { User as MongooseUser } from './User';
+import { Business as MongooseBusiness } from './Business';
+import { Transaction as MongooseTransaction } from './Transaction';
+import { Loan as MongooseLoan } from './Loan';
+import { Prediction as MongoosePrediction } from './Prediction';
+import { RiskScore as MongooseRiskScore } from './RiskScore';
+import { Recommendation as MongooseRecommendation } from './Recommendation';
+import { Notification as MongooseNotification } from './Notification';
+import { Report as MongooseReport } from './Report';
+import { Log as MongooseLog } from './Log';
+
+export const User = createModelProxy('User', MongooseUser) as typeof MongooseUser;
+export const Business = createModelProxy('Business', MongooseBusiness) as typeof MongooseBusiness;
+export const Transaction = createModelProxy('Transaction', MongooseTransaction) as typeof MongooseTransaction;
+export const Loan = createModelProxy('Loan', MongooseLoan) as typeof MongooseLoan;
+export const Prediction = createModelProxy('Prediction', MongoosePrediction) as typeof MongoosePrediction;
+export const RiskScore = createModelProxy('RiskScore', MongooseRiskScore) as typeof MongooseRiskScore;
+export const Recommendation = createModelProxy('Recommendation', MongooseRecommendation) as typeof MongooseRecommendation;
+export const Notification = createModelProxy('Notification', MongooseNotification) as typeof MongooseNotification;
+export const Report = createModelProxy('Report', MongooseReport) as typeof MongooseReport;
+export const Log = createModelProxy('Log', MongooseLog) as typeof MongooseLog;

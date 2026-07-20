@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const loan_1 = require("../controllers/loan");
+const authMiddleware_1 = require("../middlewares/authMiddleware");
+const router = (0, express_1.Router)();
+router.post('/', authMiddleware_1.protect, loan_1.applyLoan);
+router.get('/', authMiddleware_1.protect, loan_1.listLoans);
+router.get('/:id', authMiddleware_1.protect, loan_1.getLoan);
+router.put('/:id/status', authMiddleware_1.protect, (0, authMiddleware_1.requireRole)(['Bank Officer', 'Admin']), loan_1.updateLoanStatus);
+router.get('/eligibility/:businessId', authMiddleware_1.protect, loan_1.getLoanEligibility);
+exports.default = router;
