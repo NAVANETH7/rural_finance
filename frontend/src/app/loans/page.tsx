@@ -5,6 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/services/api';
 import Link from 'next/link';
+import { NavigationHeader } from '@/components/NavigationHeader';
 
 export default function LoansPage() {
   const { user, isAuthenticated, loading: authLoading } = useAuth();
@@ -143,28 +144,7 @@ export default function LoansPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
-      {/* Header */}
-      <header className="border-b border-slate-200 bg-white sticky top-0 z-40 px-6 py-4 flex items-center justify-between shadow-sm">
-        <div className="flex items-center gap-3">
-          <Link href="/dashboard" className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            AI Rural Finance
-          </Link>
-          <span className="text-slate-300">/</span>
-          <span className="text-sm text-slate-700 font-semibold">Micro-credit & Loans</span>
-          <div className="hidden md:flex items-center gap-1 bg-emerald-50 border border-emerald-200 text-emerald-700 px-2 py-0.5 rounded-full text-[9px] font-bold animate-pulse">
-            <span className="h-1 w-1 rounded-full bg-emerald-600"></span>
-            Offline DB Synced
-          </div>
-        </div>
-        <div className="flex items-center gap-3">
-          <Link href="/demo" className="px-3 py-1.5 bg-blue-50 border border-blue-200 hover:bg-blue-100 text-blue-600 rounded-lg text-xs font-semibold transition flex items-center gap-1">
-            🎬 Tour Guide
-          </Link>
-          <Link href="/dashboard" className="px-3 py-1.5 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-lg text-xs font-semibold text-slate-700 transition">
-            Dashboard
-          </Link>
-        </div>
-      </header>
+      <NavigationHeader title="Micro-credit & Loans" />
 
       <main className="flex-1 p-6 max-w-7xl w-full mx-auto space-y-6">
         {/* Emergency Weather Overdraft Alert */}

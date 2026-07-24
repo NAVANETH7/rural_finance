@@ -14,6 +14,7 @@ import { ExplainableCard } from '@/components/ExplainableCard';
 import { SchemesList } from '@/components/SchemesList';
 import { ExecutiveSummaryCard } from '@/components/ExecutiveSummaryCard';
 import { FraudAnomalyDetector } from '@/components/FraudAnomalyDetector';
+import { NavigationHeader } from '@/components/NavigationHeader';
 
 export default function DashboardPage() {
   const { user, logout, isAuthenticated, loading: authLoading } = useAuth();
@@ -285,111 +286,86 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
-      {/* Header */}
-      <header className="border-b border-slate-200 bg-white sticky top-0 z-40 px-6 py-4 flex items-center justify-between shadow-sm">
-        <div className="flex items-center gap-3">
-          <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            AI Rural Finance
-          </span>
-          {businesses.length > 0 && (
-            <div className="flex items-center gap-2">
+      <NavigationHeader title="Business Dashboard" />
+      {/* Business Selector & Quick Action Bar */}
+      {businesses.length > 0 && (
+        <div className="bg-white border-b border-slate-200 px-6 py-2.5 shadow-xs">
+          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2 text-xs">
+              <span className="font-bold text-slate-500 uppercase tracking-wider text-[10px]">Active Business:</span>
               <select
                 value={activeBusiness?._id || ''}
                 onChange={(e) => setActiveBusiness(businesses.find(b => b._id === e.target.value))}
-                className="ml-4 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-sm text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-1 text-xs font-bold text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-500"
               >
                 {businesses.map(b => (
                   <option key={b._id} value={b._id}>{b.name}</option>
                 ))}
               </select>
+            </div>
+
+            <div className="flex items-center gap-2">
               <button
                 onClick={() => setShowQrModal(true)}
-                className="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-600 rounded-lg text-xs font-bold transition flex items-center gap-1.5"
+                className="px-3 py-1 bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-600 rounded-lg text-xs font-bold transition flex items-center gap-1"
                 title="Show Business UPI QR Code"
               >
-                <span>📱</span> UPI QR Code
+                📱 UPI QR Code
               </button>
               <button
                 onClick={() => setShowVoiceModal(true)}
-                className="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-700 rounded-lg text-xs font-bold transition flex items-center gap-1.5"
+                className="px-3 py-1 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-700 rounded-lg text-xs font-bold transition flex items-center gap-1"
                 title="Voice Transaction Entry"
               >
-                <span>🎙️</span> Voice Entry
+                🎙️ Voice Entry
               </button>
               <button
                 onClick={() => setShowOcrScanner(!showOcrScanner)}
-                className="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 rounded-lg text-xs font-bold transition flex items-center gap-1.5"
+                className="px-3 py-1 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 rounded-lg text-xs font-bold transition flex items-center gap-1"
                 title="Scan Receipt OCR"
               >
-                <span>📷</span> Scan OCR
+                📷 Scan OCR
               </button>
-              <div className="hidden md:flex items-center gap-1 bg-emerald-50 border border-emerald-200 text-emerald-700 px-2 py-0.5 rounded-full text-[9px] font-bold animate-pulse">
-                <span className="h-1 w-1 rounded-full bg-emerald-600"></span>
-                Offline DB Synced
-              </div>
-            </div>
-          )}
-        </div>
+              
+              {/* Notifications Dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => setShowNotifMenu(!showNotifMenu)}
+                  className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 transition relative"
+                >
+                  🔔 Alerts
+                  {notifs.filter(n => !n.isRead).length > 0 && (
+                    <span className="absolute -top-1 -right-1 h-4 w-4 bg-rose-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center animate-pulse">
+                      {notifs.filter(n => !n.isRead).length}
+                    </span>
+                  )}
+                </button>
 
-        <div className="flex items-center gap-4 relative">
-          <Link href="/demo" className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition flex items-center gap-1">
-            🎬 Tour Guide
-          </Link>
-          <Link href="/transactions" className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition">
-            Ledger
-          </Link>
-          <Link href="/loans" className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition">
-            Loans
-          </Link>
-
-          {/* Notifications Trigger */}
-          <button
-            onClick={() => setShowNotifMenu(!showNotifMenu)}
-            className="p-2.5 bg-slate-50 border border-slate-200 rounded-lg hover:bg-slate-100 relative transition text-slate-700"
-          >
-            🔔
-            {notifs.filter(n => !n.isRead).length > 0 && (
-              <span className="absolute -top-1 -right-1 h-5 w-5 bg-rose-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center animate-pulse">
-                {notifs.filter(n => !n.isRead).length}
-              </span>
-            )}
-          </button>
-
-          {/* Notifications Dropdown */}
-          {showNotifMenu && (
-            <div className="absolute right-12 top-12 w-80 bg-white border border-slate-200 rounded-xl shadow-2xl overflow-hidden z-50">
-              <div className="p-3 border-b border-slate-100 flex items-center justify-between text-xs font-semibold">
-                <span className="text-slate-800">Alerts feed</span>
-                <button onClick={handleMarkAllNotifsRead} className="text-blue-600 hover:underline">Mark all read</button>
-              </div>
-              <div className="max-h-64 overflow-y-auto divide-y divide-slate-100">
-                {notifs.length === 0 ? (
-                  <div className="p-4 text-center text-xs text-slate-500">No alerts yet</div>
-                ) : (
-                  notifs.map(n => (
-                    <div key={n._id} className={`p-3 text-xs space-y-1 transition ${n.isRead ? 'opacity-65' : 'bg-slate-50'}`}>
-                      <p className="text-slate-700">{n.message}</p>
-                      <span className="text-[10px] text-slate-400">{new Date(n.createdAt).toLocaleDateString()}</span>
+                {showNotifMenu && (
+                  <div className="absolute right-0 top-8 w-72 bg-white border border-slate-200 rounded-xl shadow-2xl overflow-hidden z-50">
+                    <div className="p-2.5 border-b border-slate-100 flex items-center justify-between text-xs font-semibold">
+                      <span className="text-slate-800">Alerts Feed</span>
+                      <button onClick={handleMarkAllNotifsRead} className="text-blue-600 hover:underline text-[10px]">Mark all read</button>
                     </div>
-                  ))
+                    <div className="max-h-60 overflow-y-auto divide-y divide-slate-100">
+                      {notifs.length === 0 ? (
+                        <div className="p-4 text-center text-xs text-slate-400">No alerts yet</div>
+                      ) : (
+                        notifs.map(n => (
+                          <div key={n._id} className={`p-2.5 text-xs space-y-0.5 transition ${n.isRead ? 'opacity-60' : 'bg-slate-50'}`}>
+                            <p className="text-slate-700">{n.message}</p>
+                            <span className="text-[9px] text-slate-400">{new Date(n.createdAt).toLocaleDateString()}</span>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
-          )}
-
-          <div className="text-right">
-            <p className="text-xs text-slate-500">Welcome,</p>
-            <p className="text-sm font-bold text-slate-800">{user.profile.firstName}</p>
           </div>
-
-          <button
-            onClick={logout}
-            className="px-3 py-1.5 bg-rose-50 border border-rose-200 hover:bg-rose-500 text-rose-600 hover:text-white rounded-lg text-xs font-semibold transition"
-          >
-            Logout
-          </button>
         </div>
-      </header>
+      )}
 
       {/* Main Dashboard Workspace */}
       <main className="flex-1 p-6 max-w-7xl w-full mx-auto space-y-6">

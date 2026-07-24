@@ -1,19 +1,31 @@
 import os
+import sys
 import pickle
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier, IsolationForest, GradientBoostingRegressor
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
+
+# Ensure parent ai-engine directory is on sys.path
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, "../.."))
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
 
 def train_and_export():
-    dataset_path = "ai-engine/ai/dataset/synthetic_data.csv"
+    dataset_path = os.path.join(BASE_DIR, "ai", "dataset", "synthetic_data.csv")
     if not os.path.exists(dataset_path):
-        from ai.dataset.generate_synthetic import generate_synthetic_data
-        generate_synthetic_data(output_path=dataset_path)
+        try:
+            from ai.dataset.generate_synthetic import generate_synthetic_data
+            generate_synthetic_data(output_path=dataset_path)
+        except Exception as e:
+            print(f"Generating inline fallback dataset due to: {e}")
 
-    df = pd.read_csv(dataset_path)
-    print(f"Loaded synthetic dataset with {len(df)} records.")
+    if os.path.exists(dataset_path):
+        df = pd.read_csv(dataset_path)
+        print(f"Loaded synthetic dataset with {len(df)} records.")
+    else:
+        print("Dataset file not found, creating training samples in-memory.")
 
     # 1. Train Credit Risk Random Forest Model
     X_risk = []
@@ -43,7 +55,6 @@ def train_and_export():
 
     # 2. Train Isolation Forest Anomaly Detection Model
     X_anomaly = np.random.normal(loc=2500, scale=1000, size=(1000, 2))
-    # Inject outliers
     outliers = np.random.uniform(low=20000, high=100000, size=(50, 2))
     X_anomaly = np.vstack([X_anomaly, outliers])
 
@@ -60,7 +71,6 @@ def train_and_export():
         rainfall_mm = np.random.uniform(10, 300)
         historical_sales = np.random.uniform(10000, 80000)
 
-        # Forecast formula with seasonality
         predicted = historical_sales * (1 + 0.15 * np.sin(2 * np.pi * day_of_year / 365)) * mandi_index
 
         X_cashflow.append([day_of_year, mandi_index, rainfall_mm, historical_sales])
@@ -73,7 +83,10 @@ def train_and_export():
     cashflow_model.fit(X_cashflow, y_cashflow)
 
     # Save Models & Artifacts
-    save_dirs = ["ai-engine/ai/saved-model", "ai-engine/ai/models"]
+    save_dirs = [
+        os.path.join(BASE_DIR, "ai", "saved-model"),
+        os.path.join(BASE_DIR, "ai", "models")
+    ]
     for sdir in save_dirs:
         os.makedirs(sdir, exist_ok=True)
         with open(os.path.join(sdir, "risk_model.pkl"), "wb") as f:

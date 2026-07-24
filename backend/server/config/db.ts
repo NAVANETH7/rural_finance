@@ -3,24 +3,38 @@ import { User } from '../models/User';
 import bcrypt from 'bcryptjs';
 import dns from 'dns';
 
+// Override Windows local DNS with Google & Cloudflare DNS for Atlas SRV resolution
+try {
+  dns.setServers(['8.8.8.8', '1.1.1.1']);
+  console.log('Configured custom Google & Cloudflare DNS (8.8.8.8 / 1.1.1.1) for Atlas resolution.');
+} catch (dnsErr) {
+  console.warn('DNS override skipped:', dnsErr);
+}
+
 export const connectDB = async (): Promise<void> => {
+  const primaryUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/ruralfinance';
+  const localUri = 'mongodb://127.0.0.1:27017/ruralfinance';
+
   try {
-    // Force Node to use Google's DNS servers to resolve MongoDB Atlas SRV records correctly
+    console.log('Connecting to MongoDB Atlas Database...');
+    await mongoose.connect(primaryUri, { serverSelectionTimeoutMS: 6000 });
+    console.log('MongoDB Atlas Connected Successfully!');
+  } catch (error) {
+    console.warn('Primary Atlas Connection failed. Falling back to local MongoDB instance...', error);
     try {
-      dns.setServers(['8.8.8.8', '8.8.4.4']);
-      console.log('Configured custom Google DNS servers for Atlas resolution.');
-    } catch (dnsErr) {
-      console.warn('Failed to set custom DNS servers. Falling back to system resolver.');
+      await mongoose.connect(localUri, { serverSelectionTimeoutMS: 3000 });
+      console.log('MongoDB Connected to local instance.');
+    } catch (localErr) {
+      console.warn('Database Connection Failed. Operating in resilient local Mock DB Mode.');
+      return;
     }
+  }
 
-    const connStr = process.env.MONGO_URI || 'mongodb://localhost:27017/ruralfinance';
-    await mongoose.connect(connStr);
-    console.log('MongoDB Connected successfully.');
-
-    // Auto-seed default roles if database user collection is empty
+  // Auto-seed default roles if database user collection is empty
+  try {
     const count = await User.countDocuments({});
     if (count === 0) {
-      console.log('Database is empty. Auto-seeding default credentials...');
+      console.log('Database empty. Seeding default admin & officer credentials...');
       const hashedPassword = bcrypt.hashSync('password123', 10);
       const defaultUsers = [
         {
@@ -49,9 +63,9 @@ export const connectDB = async (): Promise<void> => {
         }
       ];
       await User.insertMany(defaultUsers);
-      console.log('Successfully seeded default credentials on remote database.');
+      console.log('Successfully seeded default users to MongoDB Atlas.');
     }
-  } catch (error) {
-    console.warn('Database Connection Failed. Operating in local Mock DB Mode.', error);
+  } catch (seedErr) {
+    console.warn('Seeding skipped:', seedErr);
   }
 };

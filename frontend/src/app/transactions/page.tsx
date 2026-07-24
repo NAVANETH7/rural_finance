@@ -5,6 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/services/api';
 import Link from 'next/link';
+import { NavigationHeader } from '@/components/NavigationHeader';
 
 export default function TransactionsPage() {
   const { user, isAuthenticated, loading: authLoading } = useAuth();
@@ -160,21 +161,7 @@ export default function TransactionsPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
-      {/* Header */}
-      <header className="border-b border-slate-200 bg-white sticky top-0 z-40 px-6 py-4 flex items-center justify-between shadow-sm">
-        <div className="flex items-center gap-3">
-          <Link href="/dashboard" className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            AI Rural Finance
-          </Link>
-          <span className="text-slate-300">/</span>
-          <span className="text-sm text-slate-700 font-semibold">Transactions Ledger</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <Link href="/dashboard" className="px-3 py-1.5 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-lg text-xs font-semibold text-slate-700 transition">
-            Dashboard
-          </Link>
-        </div>
-      </header>
+      <NavigationHeader title="Transactions & Ledger" />
 
       <main className="flex-1 p-6 max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left column: Add/Import forms */}
