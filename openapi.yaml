@@ -1,0 +1,71 @@
+openapi: 3.0.3
+info:
+  title: AI Rural Finance Platform API
+  description: Enterprise FinTech REST API for cash flow prediction, risk flagging, government scheme matching, and micro-loan underwriting.
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/api/v1
+    description: Local Development Server
+paths:
+  /auth/login:
+    post:
+      summary: Authenticate user & issue JWT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Successful authentication
+  /transactions:
+    get:
+      summary: Fetch business ledger transactions
+      parameters:
+        - name: businessId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Transactions list returned
+  /schemes/recommendations:
+    get:
+      summary: Fetch government financial scheme recommendations
+      parameters:
+        - name: businessId
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Matched schemes list returned
+  /simulation/simulate:
+    post:
+      summary: Run interactive What-If scenario simulation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                monthly_income:
+                  type: number
+                monthly_expenses:
+                  type: number
+                revenue_change_percent:
+                  type: number
+                expense_change_percent:
+                  type: number
+      responses:
+        '200':
+          description: Simulation results returned

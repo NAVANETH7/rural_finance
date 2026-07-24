@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Log = exports.Report = exports.Notification = exports.Recommendation = exports.RiskScore = exports.Prediction = exports.Loan = exports.Transaction = exports.Business = exports.User = void 0;
+exports.Scheme = exports.Tenant = exports.Log = exports.Report = exports.Notification = exports.Recommendation = exports.RiskScore = exports.Prediction = exports.Loan = exports.Transaction = exports.Business = exports.User = void 0;
 const dbProxy_1 = require("./dbProxy");
 const User_1 = require("./User");
 const Business_1 = require("./Business");
@@ -12,6 +12,8 @@ const Recommendation_1 = require("./Recommendation");
 const Notification_1 = require("./Notification");
 const Report_1 = require("./Report");
 const Log_1 = require("./Log");
+const Tenant_1 = require("./Tenant");
+const Scheme_1 = require("./Scheme");
 exports.User = (0, dbProxy_1.createModelProxy)('User', User_1.User);
 exports.Business = (0, dbProxy_1.createModelProxy)('Business', Business_1.Business);
 exports.Transaction = (0, dbProxy_1.createModelProxy)('Transaction', Transaction_1.Transaction);
@@ -22,3 +24,5 @@ exports.Recommendation = (0, dbProxy_1.createModelProxy)('Recommendation', Recom
 exports.Notification = (0, dbProxy_1.createModelProxy)('Notification', Notification_1.Notification);
 exports.Report = (0, dbProxy_1.createModelProxy)('Report', Report_1.Report);
 exports.Log = (0, dbProxy_1.createModelProxy)('Log', Log_1.Log);
+exports.Tenant = (0, dbProxy_1.createModelProxy)('Tenant', Tenant_1.Tenant);
+exports.Scheme = (0, dbProxy_1.createModelProxy)('Scheme', Scheme_1.Scheme);

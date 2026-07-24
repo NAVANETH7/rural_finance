@@ -9,6 +9,8 @@ import { Recommendation as MongooseRecommendation } from './Recommendation';
 import { Notification as MongooseNotification } from './Notification';
 import { Report as MongooseReport } from './Report';
 import { Log as MongooseLog } from './Log';
+import { Tenant as MongooseTenant } from './Tenant';
+import { Scheme as MongooseScheme } from './Scheme';
 
 export const User = createModelProxy('User', MongooseUser) as typeof MongooseUser;
 export const Business = createModelProxy('Business', MongooseBusiness) as typeof MongooseBusiness;
@@ -20,3 +22,5 @@ export const Recommendation = createModelProxy('Recommendation', MongooseRecomme
 export const Notification = createModelProxy('Notification', MongooseNotification) as typeof MongooseNotification;
 export const Report = createModelProxy('Report', MongooseReport) as typeof MongooseReport;
 export const Log = createModelProxy('Log', MongooseLog) as typeof MongooseLog;
+export const Tenant = createModelProxy('Tenant', MongooseTenant) as typeof MongooseTenant;
+export const Scheme = createModelProxy('Scheme', MongooseScheme) as typeof MongooseScheme;

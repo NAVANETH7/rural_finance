@@ -1,23 +1,23 @@
 1
-00:00:00,000 --> 00:00:05,000
-Welcome to A.I. Rural Finance, an intelligent credit decisioning platform for rural entrepreneurs.
+00:00:00,000 --> 00:00:20,000
+Welcome to A.I. Rural Finance, an intelligent credit scoring and prediction platform for rural enterprises.
 
 2
-00:00:05,000 --> 00:00:13,000
-First, we test the built-in accessibility speaker, reading matching scheme benefits aloud in local languages.
+00:00:20,000 --> 00:00:40,000
+First, we showcase the voice accessibility guide, reading complex scheme metrics aloud in local languages.
 
 3
-00:00:13,000 --> 00:00:21,000
-Next, we take the interactive Credit Booster Quiz. Answering successfully boosts our credit score by plus five percent.
+00:00:40,000 --> 00:01:00,000
+Next, the user completes the Credit Booster Quiz, earning an immediate plus five percent borrowing limit increase.
 
 4
-00:00:21,000 --> 00:00:32,000
-By opening the UPI QR Code modal and triggering a simulated client payment, the backend updates our cash flow ledger dynamically.
+00:01:00,000 --> 00:01:20,000
+We simulate a live customer QR code payment. The ledger is updated in real-time while the audio soundbox plays.
 
 5
-00:00:32,000 --> 00:00:43,000
-Navigating to the Loans page, we see our micro-credit history and claim the emergency interest-free weather relief overdraft.
+00:01:20,000 --> 00:01:40,000
+In the loans page, we claim pre-approved climate relief overdrafts and expand credit lines using warehouse receipts.
 
 6
-00:00:43,000 --> 00:00:50,000
-Finally, we slide the Credit Score Simulator to see how growing revenue and lower expenses immediately increase borrowing limits.
+00:01:40,000 --> 00:02:00,000
+Finally, we use the Credit Simulator to adjust cash parameters, and show the Kisan Credit Card rate slashers.

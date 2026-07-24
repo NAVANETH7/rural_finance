@@ -3,7 +3,9 @@ import { Schema, model } from 'mongoose';
 const userSchema = new Schema({
   email: { type: String, required: true, unique: true, lowercase: true, trim: true },
   password: { type: String, required: true },
-  role: { type: String, required: true, enum: ['Business Owner', 'Bank Officer', 'Admin'] },
+  role: { type: String, required: true, enum: ['Business Owner', 'Bank Officer', 'Tenant Admin', 'Admin'], default: 'Business Owner' },
+  tenantId: { type: Schema.Types.ObjectId, ref: 'Tenant', default: null },
+  languagePreference: { type: String, default: 'en', enum: ['en', 'ta', 'hi', 'te', 'kn'] },
   isVerified: { type: Boolean, default: false },
   otpCode: { type: String, default: null },
   otpExpires: { type: Date, default: null },

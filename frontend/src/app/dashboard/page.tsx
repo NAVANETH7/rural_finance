@@ -7,6 +7,13 @@ import api from '@/services/api';
 import { io } from 'socket.io-client';
 import Link from 'next/link';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { VoiceTransactionModal } from '@/components/VoiceTransactionModal';
+import { OCRInvoiceScanner } from '@/components/OCRInvoiceScanner';
+import { ScenarioSimulator } from '@/components/ScenarioSimulator';
+import { ExplainableCard } from '@/components/ExplainableCard';
+import { SchemesList } from '@/components/SchemesList';
+import { ExecutiveSummaryCard } from '@/components/ExecutiveSummaryCard';
+import { FraudAnomalyDetector } from '@/components/FraudAnomalyDetector';
 
 export default function DashboardPage() {
   const { user, logout, isAuthenticated, loading: authLoading } = useAuth();
@@ -64,6 +71,8 @@ export default function DashboardPage() {
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [selectedQuizAns, setSelectedQuizAns] = useState<string | null>(null);
   const [quizFeedback, setQuizFeedback] = useState('');
+  const [showVoiceModal, setShowVoiceModal] = useState(false);
+  const [showOcrScanner, setShowOcrScanner] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
@@ -300,6 +309,20 @@ export default function DashboardPage() {
               >
                 <span>📱</span> UPI QR Code
               </button>
+              <button
+                onClick={() => setShowVoiceModal(true)}
+                className="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-700 rounded-lg text-xs font-bold transition flex items-center gap-1.5"
+                title="Voice Transaction Entry"
+              >
+                <span>🎙️</span> Voice Entry
+              </button>
+              <button
+                onClick={() => setShowOcrScanner(!showOcrScanner)}
+                className="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 rounded-lg text-xs font-bold transition flex items-center gap-1.5"
+                title="Scan Receipt OCR"
+              >
+                <span>📷</span> Scan OCR
+              </button>
               <div className="hidden md:flex items-center gap-1 bg-emerald-50 border border-emerald-200 text-emerald-700 px-2 py-0.5 rounded-full text-[9px] font-bold animate-pulse">
                 <span className="h-1 w-1 rounded-full bg-emerald-600"></span>
                 Offline DB Synced
@@ -522,6 +545,14 @@ export default function DashboardPage() {
         ) : (
           /* Dashboard Layout */
           <div className="space-y-6">
+            {showOcrScanner && (
+              <OCRInvoiceScanner onScanComplete={(data) => {
+                setShowOcrScanner(false);
+                setToast({ show: true, title: 'OCR Invoice Parsed', message: `Processed ${data.vendor} for Rs. ${data.totalAmount}` });
+                fetchDashboardData();
+              }} />
+            )}
+
             {/* KPI Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-md">
@@ -603,6 +634,11 @@ export default function DashboardPage() {
                     )}
                   </div>
                 </div>
+
+                <ExplainableCard
+                  score={Math.max(5, kpis.riskScore - (quizCompleted ? 5 : 0))}
+                  healthLabel={kpis.riskScore < 30 ? 'Strong' : kpis.riskScore < 70 ? 'Stable' : 'At Risk'}
+                />
 
                 {/* Self Help Group (SHG) Network score */}
                 <div className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-md space-y-3">
@@ -838,8 +874,29 @@ export default function DashboardPage() {
                 </div>
               </div>
             </div>
+
+            {/* Scenario Simulator, Fraud Guard & Scheme Recommendation Sections */}
+            <FraudAnomalyDetector />
+            <ScenarioSimulator />
+            <SchemesList businessId={activeBusiness?._id} />
+            <ExecutiveSummaryCard
+              businessName={activeBusiness?.name}
+              monthlyRevenue={kpis.totalRevenue}
+              monthlyExpenses={kpis.totalExpenses}
+              riskScore={Math.max(5, kpis.riskScore - (quizCompleted ? 5 : 0))}
+            />
           </div>
         )}
+
+      {/* Voice Transaction Assistant Modal */}
+      <VoiceTransactionModal
+        isOpen={showVoiceModal}
+        onClose={() => setShowVoiceModal(false)}
+        onSaveTransaction={(tx) => {
+          setToast({ show: true, title: 'Voice Entry Saved', message: `Saved ${tx.type} Rs. ${tx.amount} (${tx.category})` });
+          fetchDashboardData();
+        }}
+      />
       {/* Floating Copilot Widget */}
       <div className="fixed bottom-6 right-6 z-50 font-sans">
         {!copilotOpen ? (

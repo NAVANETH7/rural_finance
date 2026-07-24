@@ -19,6 +19,8 @@ import reportRoutes from './routes/report';
 import notificationRoutes from './routes/notification';
 import adminRoutes from './routes/admin';
 import copilotRoutes from './routes/copilot';
+import schemeRoutes from './routes/scheme';
+import simulationRoutes from './routes/simulation';
 
 // Load environment variables
 dotenv.config();
@@ -74,18 +76,19 @@ app.use('/api/v1/reports', reportRoutes);
 app.use('/api/v1/notifications', notificationRoutes);
 app.use('/api/v1/admin', adminRoutes);
 app.use('/api/v1/copilot', copilotRoutes);
+app.use('/api/v1/schemes', schemeRoutes);
+app.use('/api/v1/simulation', simulationRoutes);
 
 // Global Error Handler
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error('Unhandled Server Error:', err);
   res.status(500).json({
-    error: 'Internal Server Error',
-    message: err.message || 'An unexpected error occurred.'
+    message: 'Internal Server Error',
+    error: process.env.NODE_ENV === 'production' ? {} : err.stack
   });
 });
 
-// Start Server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
-  console.log(`AI Rural Finance Server is running on port ${PORT}`);
+  console.log(`AI Rural Finance Backend running on port ${PORT}`);
 });
